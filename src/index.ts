@@ -1,11 +1,26 @@
+import { userEnroll } from "./routes/user.enroll";
+import { createResponse } from "./utils/response";
+
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		const { method } = request;
 		switch (method) {
 			case 'GET':
-				return new Response('Server is Healthy!');
+				return createResponse({
+					success: true,
+					message: 'Server is Healthy!'
+				}, 200);
+			case 'POST':
+				return await userEnroll(request, env);
+			case 'OPTIONS':
+				return createResponse({
+					success: true
+				}, 204)
 			default:
-				return new Response('Method not allowed', { status: 405 });
+				return createResponse({
+					success: false,
+					error: 'Method not allowed'
+				}, 405);
 		}
 	},
 	async scheduled(event, env, ctx): Promise<void> {
