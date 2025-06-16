@@ -1,8 +1,9 @@
 import { userEnroll } from "./routes/user.enroll";
 import { createResponseFactory } from "./utils/response";
+import { processPendingUsers } from "./cron/cronJob";
 
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
+	async fetch(request, env: Env, ctx): Promise<Response> {
 		const { method } = request;
 		const createResponse = createResponseFactory(env);
 		switch (method) {
@@ -23,6 +24,7 @@ export default {
 		}
 	},
 	async scheduled(event, env, ctx): Promise<void> {
-		console.log("scheduled worker ran")
+		console.log('⏰ Cron job started');
+		await processPendingUsers(env);
 	},
 } satisfies ExportedHandler<Env>;
