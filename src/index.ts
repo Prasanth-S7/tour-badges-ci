@@ -14,9 +14,7 @@ export default {
 			case 'POST':
 				return await userEnroll(request, env, createResponse);
 			case 'OPTIONS':
-				return createResponse({
-					success: true
-				}, 204)
+				return createResponse(204)
 			default:
 				return createResponse({
 					success: false,
