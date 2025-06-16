@@ -3,7 +3,7 @@ import { createResponseFactory } from "./utils/response";
 import { processPendingUsers } from "./cron/cronJob";
 
 export default {
-	async fetch(request, env: Env, ctx): Promise<Response> {
+	async fetch(request, env, ctx): Promise<Response> {
 		const { method } = request;
 		const createResponse = createResponseFactory(env);
 		switch (method) {
