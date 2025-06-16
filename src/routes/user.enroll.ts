@@ -1,7 +1,6 @@
-import { createResponse } from "../utils/response";
 import { isValidEmail, isValidName } from "../utils/validation";
 
-export const userEnroll = async (request: Request, env: Env) => {
+export const userEnroll = async (request: Request, env: Env, createResponse: (data: any, status?: number) => Response) => {
 	try{
         const { pathname } = new URL(request.url);
         if(pathname === '/api/v1/enroll'){
@@ -14,7 +13,7 @@ export const userEnroll = async (request: Request, env: Env) => {
                     return createResponse({
                         success: false,
                         error: 'Invalid email or name'
-                    })
+                    }, 400)
                 }
             }catch(error){
                 return createResponse({

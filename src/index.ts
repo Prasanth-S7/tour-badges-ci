@@ -1,9 +1,10 @@
 import { userEnroll } from "./routes/user.enroll";
-import { createResponse } from "./utils/response";
+import { createResponseFactory } from "./utils/response";
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		const { method } = request;
+		const createResponse = createResponseFactory(env);
 		switch (method) {
 			case 'GET':
 				return createResponse({
@@ -11,7 +12,7 @@ export default {
 					message: 'Server is Healthy!'
 				}, 200);
 			case 'POST':
-				return await userEnroll(request, env);
+				return await userEnroll(request, env, createResponse);
 			case 'OPTIONS':
 				return createResponse({
 					success: true

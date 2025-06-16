@@ -7,6 +7,10 @@
 	"name": "tour-badges",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-06-07",
+	"vars": {
+		"ENVIRONMENT": "production",
+		"ALLOWED_ORIGINS": "https://tour.json-schema.org"
+	},
 	"observability": {
 		"enabled": true
 	},
@@ -22,6 +26,23 @@
         "database_id": "<unique-ID-for-your-database>"
         }
     ],
+	/*
+		Environment specific configurations
+	*/
+	"env": {
+		"development": {
+			"vars": {
+				"ENVIRONMENT": "development",
+				"ALLOWED_ORIGINS": "*"
+			}
+		},
+		"production": {
+			"vars": {
+				"ENVIRONMENT": "production",
+				"ALLOWED_ORIGINS": "https://tour.json-schema.org"
+			}
+		}
+	},
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
