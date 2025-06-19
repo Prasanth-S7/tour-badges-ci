@@ -1,1 +1,9 @@
--- Migration number: 0001 	 2025-06-19T13:18:39.869Z
+-- Migration number: 0001 	 2025-06-19T15:56:30.359Z
+-- Up
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    badge_received INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
