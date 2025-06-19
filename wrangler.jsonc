@@ -8,7 +8,7 @@
 	"main": "src/index.ts",
 	"compatibility_date": "2025-06-07",
 	"vars": {
-		"ENVIRONMENT": "development"
+		"ENVIRONMENT": "production"
 	},
 	"observability": {
 		"enabled": true
