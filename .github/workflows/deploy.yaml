@@ -22,6 +22,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - command: pnpm --version
+
   deploy:
     name: Deploy to Cloudflare Workers
     needs: cache-and-install
