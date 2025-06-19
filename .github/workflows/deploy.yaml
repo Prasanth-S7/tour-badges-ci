@@ -29,6 +29,7 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+        run: ls
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
