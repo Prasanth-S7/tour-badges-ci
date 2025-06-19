@@ -38,3 +38,22 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy src/index.ts --env production
+          environment: |
+            {
+              "env": {
+                "production": {
+                  "vars": {
+                    "ENVIRONMENT": "production",
+                    "ALLOWED_ORIGINS": "https://tour.json-schema.org",
+                    "BADGR_API": "https://api.badgr.io"
+                  },
+                  "d1_databases": [
+                    {
+                      "binding": "DB",
+                      "database_name": "db",
+                      "database_id": "${{ secrets.PROD_DATABASE_ID }}"
+                    }
+                  ]
+                }
+              }
+            }
