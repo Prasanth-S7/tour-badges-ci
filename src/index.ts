@@ -10,7 +10,7 @@ export default {
 			case 'GET':
 				return createResponse({
 					success: true,
-					message: 'Server is Healthy!(changedd)'
+					message: 'Server is Healthy!(changedds)'
 				}, 200);
 			case 'POST':
 				return await userEnroll(request, env, createResponse);
