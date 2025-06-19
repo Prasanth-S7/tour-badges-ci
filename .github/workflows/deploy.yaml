@@ -28,8 +28,9 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
-        run: ls
+        run: |
+          pnpm Install
+          ls
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
