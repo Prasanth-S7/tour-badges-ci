@@ -8,9 +8,7 @@
 	"main": "src/index.ts",
 	"compatibility_date": "2025-06-07",
 	"vars": {
-		"ENVIRONMENT": "development",
-		"ALLOWED_ORIGINS": "https://tour.json-schema.org",
-		"BADGR_API": "https://api.badgr.io"
+		"ENVIRONMENT": "development"
 	},
 	"observability": {
 		"enabled": true
@@ -20,12 +18,6 @@
 			"* * * * *"
 		]
 	},
-    "d1_databases": [
-        {
-        "binding": "DB",
-        "database_name": "db"
-        }
-    ],
 	/*
 		Environment specific configurations
 	*/
@@ -43,7 +35,10 @@
 				}
 			]
 		},
-		"production": {}
+		"production": {
+			"vars": {},
+			"d1_databases": []
+		}
 	},
 	/**
 	 * Smart Placement
