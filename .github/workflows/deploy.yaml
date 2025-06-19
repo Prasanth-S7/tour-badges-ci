@@ -32,42 +32,36 @@ jobs:
           pnpm install
           ls
 
+      - name: Setup Wrangler Config
+        run: |
+          # Copy the example config if it exists, or use the main one
+          if [ -f "wrangler.jsonc.example" ]; then
+            cp wrangler.jsonc.example wrangler.jsonc
+          fi
+          
+          # Replace the database ID placeholder with the actual secret
+          sed -i 's/<unique-ID-for-your-database>/${{ secrets.PROD_DATABASE_ID }}/g' wrangler.jsonc
+          
+          echo "Final wrangler.jsonc:"
+          cat wrangler.jsonc
+
+      - name: Debug Wrangler Config
+        run: |
+          echo "Current directory:"
+          ls -la
+          
+          echo "Wrangler config:"
+          cat wrangler.jsonc
+          
+          echo "Dry run to validate config:"
+          pnpm exec wrangler deploy src/index.ts --env production --dry-run
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy src/index.ts --env production
-          environment: |
-            {
-              "env": {
-                "production": {
-                  "vars": {
-                    "ENVIRONMENT": "production",
-                    "ALLOWED_ORIGINS": "https://tour.json-schema.org",
-                    "BADGR_API": "https://api.badgr.io"
-                  },
-                  "d1_databases": [
-                    {
-                      "binding": "DB",
-                      "database_name": "db",
-                      "database_id": "${{ secrets.PROD_DATABASE_ID }}"
-                    }
-                  ]
-                }
-              }
-            }
-      - name: Debug Wrangler Config
-        run: |
-          echo "Current directory:"
-          ls -la
-          
-          echo "Original wrangler.jsonc:"
-          cat wrangler.jsonc || echo "No wrangler.jsonc found"
-          
-          echo "Merged configuration:"
-          pnpm exec wrangler deploy src/index.ts --env production --dry-run --outdir=./deploy-config
-          cat ./deploy-config/wrangler.json
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
