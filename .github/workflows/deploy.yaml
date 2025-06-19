@@ -48,7 +48,7 @@ jobs:
 
       - name: migrate database
         run: |
-          pnpm exec wrangler d1 migrations apply db --env production
+          pnpm exec wrangler d1 migrations apply db --env production --remote
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
